@@ -105,6 +105,11 @@ class R2MO_Offloader {
             $keys[] = [$relative, $absolute];
         }
 
+        if ($uploaded === 0) {
+            return ['ok' => false, 'uploaded' => 0, 'verified' => 0,
+                    'msg' => 'Dosya bulunamadı (disk üzerinde yok)'];
+        }
+
         update_post_meta($attachment_id, self::META_OFFLOADED, 1);
 
         if (!empty($s['delete_local'])) {
