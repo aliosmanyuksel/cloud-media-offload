@@ -18,12 +18,12 @@ class R2MO_Admin {
 
     public function menu() {
         add_menu_page(
-            'R2 Media Offload', 'R2 Offload', 'manage_options', 'r2mo',
+            __('Cloud Media Offload', 'cloud-media-offload'), __('Cloud Offload', 'cloud-media-offload'), 'manage_options', 'r2mo',
             [$this, 'render_settings'], 'dashicons-cloud', 81
         );
-        add_submenu_page('r2mo', 'Ayarlar', 'Ayarlar', 'manage_options', 'r2mo', [$this, 'render_settings']);
-        add_submenu_page('r2mo', 'Kurulum Sihirbazı', 'Kurulum Sihirbazı', 'manage_options', 'r2mo-wizard', [$this, 'render_wizard']);
-        add_submenu_page('r2mo', 'Migrasyon', 'Migrasyon', 'manage_options', 'r2mo-migrate', [$this, 'render_migrate']);
+        add_submenu_page('r2mo', __('Settings', 'cloud-media-offload'), __('Settings', 'cloud-media-offload'), 'manage_options', 'r2mo', [$this, 'render_settings']);
+        add_submenu_page('r2mo', __('Setup Wizard', 'cloud-media-offload'), __('Setup Wizard', 'cloud-media-offload'), 'manage_options', 'r2mo-wizard', [$this, 'render_wizard']);
+        add_submenu_page('r2mo', __('Migration', 'cloud-media-offload'), __('Migration', 'cloud-media-offload'), 'manage_options', 'r2mo-migrate', [$this, 'render_migrate']);
     }
 
     public function enqueue($hook) {
@@ -35,6 +35,15 @@ class R2MO_Admin {
         wp_localize_script('r2mo-admin', 'R2MO', [
             'ajax'  => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce(R2MO_Migrator::NONCE),
+            'i18n' => [
+                'testing'    => __('Testing…', 'cloud-media-offload'),
+                'error'      => __('Error:', 'cloud-media-offload'),
+                'connError'  => __('Connection error:', 'cloud-media-offload'),
+                'started'    => __('Started…', 'cloud-media-offload'),
+                'stopped'    => __('Stopped.', 'cloud-media-offload'),
+                'completed'  => __('Completed. Remaining:', 'cloud-media-offload'),
+                'failPrefix' => __('ERROR:', 'cloud-media-offload'),
+            ],
         ]);
     }
 
@@ -44,7 +53,7 @@ class R2MO_Admin {
 
     private function locked_note($key) {
         return R2MO_Settings::is_constant($key)
-            ? ' <em>(wp-config ile yönetiliyor)</em>'
+            ? ' <em>' . __('(managed via wp-config)', 'cloud-media-offload') . '</em>'
             : '';
     }
 
@@ -55,63 +64,63 @@ class R2MO_Admin {
         $s = R2MO_Settings::get();
         ?>
         <div class="wrap r2mo">
-            <h1>R2 Media Offload</h1>
+            <h1><?php esc_html_e('Cloud Media Offload', 'cloud-media-offload'); ?></h1>
             <form method="post" action="options.php">
                 <?php settings_fields('r2mo_group'); ?>
                 <table class="form-table" role="presentation">
-                    <tr><th>Sağlayıcı</th><td>
+                    <tr><th><?php esc_html_e('Provider', 'cloud-media-offload'); ?></th><td>
                         <select name="<?php echo esc_attr($this->field_name('provider')); ?>">
-                            <option value="r2" <?php selected($s['provider'], 'r2'); ?>>Cloudflare R2</option>
-                            <option value="generic" <?php selected($s['provider'], 'generic'); ?>>Genel S3-uyumlu</option>
+                            <option value="r2" <?php selected($s['provider'], 'r2'); ?>><?php esc_html_e('Cloudflare R2', 'cloud-media-offload'); ?></option>
+                            <option value="generic" <?php selected($s['provider'], 'generic'); ?>><?php esc_html_e('Generic S3-compatible', 'cloud-media-offload'); ?></option>
                         </select>
                     </td></tr>
-                    <tr><th>Account ID (R2)<?php echo $this->locked_note('account_id'); ?></th><td>
+                    <tr><th><?php esc_html_e('Account ID (R2)', 'cloud-media-offload'); ?><?php echo $this->locked_note('account_id'); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('account_id')); ?>" value="<?php echo esc_attr($s['account_id']); ?>">
                     </td></tr>
-                    <tr><th>Endpoint (genel)<?php echo $this->locked_note('endpoint'); ?></th><td>
+                    <tr><th><?php esc_html_e('Endpoint (generic)', 'cloud-media-offload'); ?><?php echo $this->locked_note('endpoint'); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('endpoint')); ?>" value="<?php echo esc_attr($s['endpoint']); ?>" placeholder="s3.us-west-1.wasabisys.com">
                     </td></tr>
-                    <tr><th>Region<?php echo $this->locked_note('region'); ?></th><td>
+                    <tr><th><?php esc_html_e('Region', 'cloud-media-offload'); ?><?php echo $this->locked_note('region'); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('region')); ?>" value="<?php echo esc_attr($s['region']); ?>">
-                        <p class="description">R2 için <code>auto</code>.</p>
+                        <p class="description"><?php esc_html_e('Use', 'cloud-media-offload'); ?> <code>auto</code> <?php esc_html_e('for R2.', 'cloud-media-offload'); ?></p>
                     </td></tr>
-                    <tr><th>Path-style</th><td>
-                        <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('path_style')); ?>" value="1" <?php checked($s['path_style']); ?>> Path-style URL kullan (R2 ve çoğu S3-uyumlu için açık)</label>
+                    <tr><th><?php esc_html_e('Path-style', 'cloud-media-offload'); ?></th><td>
+                        <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('path_style')); ?>" value="1" <?php checked($s['path_style']); ?>> <?php esc_html_e('Use path-style URLs (on for R2 and most S3-compatible)', 'cloud-media-offload'); ?></label>
                     </td></tr>
-                    <tr><th>Access Key ID<?php echo $this->locked_note('access_key'); ?></th><td>
+                    <tr><th><?php esc_html_e('Access Key ID', 'cloud-media-offload'); ?><?php echo $this->locked_note('access_key'); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('access_key')); ?>" value="<?php echo esc_attr($s['access_key']); ?>">
                     </td></tr>
-                    <tr><th>Secret Access Key<?php echo $this->locked_note('secret_key'); ?></th><td>
+                    <tr><th><?php esc_html_e('Secret Access Key', 'cloud-media-offload'); ?><?php echo $this->locked_note('secret_key'); ?></th><td>
                         <input type="password" class="regular-text" name="<?php echo esc_attr($this->field_name('secret_key')); ?>" value="<?php echo esc_attr($s['secret_key']); ?>">
                     </td></tr>
-                    <tr><th>Bucket<?php echo $this->locked_note('bucket'); ?></th><td>
+                    <tr><th><?php esc_html_e('Bucket', 'cloud-media-offload'); ?><?php echo $this->locked_note('bucket'); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('bucket')); ?>" value="<?php echo esc_attr($s['bucket']); ?>">
                     </td></tr>
-                    <tr><th>Public Base URL<?php echo $this->locked_note('public_base'); ?></th><td>
+                    <tr><th><?php esc_html_e('Public Base URL', 'cloud-media-offload'); ?><?php echo $this->locked_note('public_base'); ?></th><td>
                         <input type="url" class="regular-text" name="<?php echo esc_attr($this->field_name('public_base')); ?>" value="<?php echo esc_attr($s['public_base']); ?>" placeholder="https://cdn.example.com">
-                        <p class="description">Custom domain veya r2.dev adresi. URL yeniden yazma bunu kullanır.</p>
+                        <p class="description"><?php esc_html_e('Custom domain or r2.dev address. URL rewriting uses this.', 'cloud-media-offload'); ?></p>
                     </td></tr>
-                    <tr><th>Key Prefix</th><td>
+                    <tr><th><?php esc_html_e('Key Prefix', 'cloud-media-offload'); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('prefix')); ?>" value="<?php echo esc_attr($s['prefix']); ?>" placeholder="wp">
                     </td></tr>
-                    <tr><th>Otomatik offload</th><td>
-                        <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('auto_offload')); ?>" value="1" <?php checked($s['auto_offload']); ?>> Yeni yüklemeleri R2'ye gönder</label>
+                    <tr><th><?php esc_html_e('Automatic offload', 'cloud-media-offload'); ?></th><td>
+                        <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('auto_offload')); ?>" value="1" <?php checked($s['auto_offload']); ?>> <?php esc_html_e('Send new uploads to R2', 'cloud-media-offload'); ?></label>
                     </td></tr>
-                    <tr><th>Tam sayfa URL yeniden yazma</th><td>
-                        <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('fullpage_rewrite')); ?>" value="1" <?php checked($s['fullpage_rewrite']); ?>> Çıktı tamponuyla tüm sayfadaki yerel medya URL'lerini çevir</label>
-                        <p class="description"><strong>Yalnızca migrasyon tamamlandıktan (0 bekleyen) sonra açın</strong> — aksi halde henüz taşınmamış görseller 404 verebilir.</p>
+                    <tr><th><?php esc_html_e('Full-page URL rewriting', 'cloud-media-offload'); ?></th><td>
+                        <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('fullpage_rewrite')); ?>" value="1" <?php checked($s['fullpage_rewrite']); ?>> <?php esc_html_e('Rewrite all local media URLs across the page via output buffering', 'cloud-media-offload'); ?></label>
+                        <p class="description"><strong><?php esc_html_e('Enable only after migration completes (0 pending) — otherwise not-yet-migrated images may 404.', 'cloud-media-offload'); ?></strong></p>
                     </td></tr>
-                    <tr><th>Yerel kopyayı sil</th><td>
-                        <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('delete_local')); ?>" value="1" <?php checked($s['delete_local']); ?>> R2'ye yükleyip doğruladıktan sonra sunucudan sil</label>
+                    <tr><th><?php esc_html_e('Delete local copy', 'cloud-media-offload'); ?></th><td>
+                        <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('delete_local')); ?>" value="1" <?php checked($s['delete_local']); ?>> <?php esc_html_e('Delete from the server after upload is verified on R2', 'cloud-media-offload'); ?></label>
                     </td></tr>
-                    <tr><th>Batch boyutu</th><td>
+                    <tr><th><?php esc_html_e('Batch size', 'cloud-media-offload'); ?></th><td>
                         <input type="number" min="1" max="200" name="<?php echo esc_attr($this->field_name('batch_size')); ?>" value="<?php echo esc_attr($s['batch_size']); ?>">
                     </td></tr>
                 </table>
                 <?php submit_button(); ?>
             </form>
-            <h2>Bağlantı testi</h2>
-            <button class="button" id="r2mo-test">Bağlantıyı test et</button>
+            <h2><?php esc_html_e('Connection test', 'cloud-media-offload'); ?></h2>
+            <button class="button" id="r2mo-test"><?php esc_html_e('Test connection', 'cloud-media-offload'); ?></button>
             <span id="r2mo-test-result" class="r2mo-test-result"></span>
         </div>
         <?php
@@ -125,70 +134,70 @@ class R2MO_Admin {
         $pending = $this->migrator->count_pending();
         ?>
         <div class="wrap r2mo">
-            <h1>Kurulum Sihirbazı</h1>
+            <h1><?php esc_html_e('Setup Wizard', 'cloud-media-offload'); ?></h1>
             <div class="r2mo-steps">
-                <span data-dot="1" class="on">1. Sağlayıcı</span>
-                <span data-dot="2">2. Kimlik</span>
-                <span data-dot="3">3. Test</span>
-                <span data-dot="4">4. Seçenekler</span>
-                <span data-dot="5">5. Bitir</span>
+                <span data-dot="1" class="on"><?php esc_html_e('1. Provider', 'cloud-media-offload'); ?></span>
+                <span data-dot="2"><?php esc_html_e('2. Credentials', 'cloud-media-offload'); ?></span>
+                <span data-dot="3"><?php esc_html_e('3. Test', 'cloud-media-offload'); ?></span>
+                <span data-dot="4"><?php esc_html_e('4. Options', 'cloud-media-offload'); ?></span>
+                <span data-dot="5"><?php esc_html_e('5. Finish', 'cloud-media-offload'); ?></span>
             </div>
             <form method="post" action="options.php" id="r2mo-wizard-form">
                 <?php settings_fields('r2mo_group'); ?>
 
                 <div class="r2mo-wizard-step active" data-step="1">
-                    <h2>1. Depolama sağlayıcısını seçin</h2>
+                    <h2><?php esc_html_e('1. Choose your storage provider', 'cloud-media-offload'); ?></h2>
                     <p>
-                        <label><input type="radio" name="<?php echo esc_attr($this->field_name('provider')); ?>" value="r2" <?php checked($s['provider'], 'r2'); ?>> Cloudflare R2 (önerilen — sıfır egress)</label><br>
-                        <label><input type="radio" name="<?php echo esc_attr($this->field_name('provider')); ?>" value="generic" <?php checked($s['provider'], 'generic'); ?>> Genel S3-uyumlu (Wasabi, Backblaze B2, DigitalOcean, MinIO)</label>
+                        <label><input type="radio" name="<?php echo esc_attr($this->field_name('provider')); ?>" value="r2" <?php checked($s['provider'], 'r2'); ?>> <?php esc_html_e('Cloudflare R2 (recommended — zero egress)', 'cloud-media-offload'); ?></label><br>
+                        <label><input type="radio" name="<?php echo esc_attr($this->field_name('provider')); ?>" value="generic" <?php checked($s['provider'], 'generic'); ?>> <?php esc_html_e('Generic S3-compatible (Wasabi, Backblaze B2, DigitalOcean, MinIO)', 'cloud-media-offload'); ?></label>
                     </p>
-                    <button type="button" class="button button-primary r2mo-next">İleri</button>
+                    <button type="button" class="button button-primary r2mo-next"><?php esc_html_e('Next', 'cloud-media-offload'); ?></button>
                 </div>
 
                 <div class="r2mo-wizard-step" data-step="2">
-                    <h2>2. Kimlik bilgileri</h2>
-                    <p class="description">Güvenlik için bu değerleri <code>wp-config.php</code> içinde sabit olarak da tanımlayabilirsiniz (örn. <code>R2MO_SECRET_KEY</code>); o zaman DB'deki değeri ezer.</p>
+                    <h2><?php esc_html_e('2. Credentials', 'cloud-media-offload'); ?></h2>
+                    <p class="description"><?php esc_html_e('You may also define these values as constants in wp-config.php (e.g. R2MO_SECRET_KEY); a constant overrides the database value.', 'cloud-media-offload'); ?></p>
                     <table class="form-table" role="presentation">
-                        <tr><th>Account ID (R2)</th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('account_id')); ?>" value="<?php echo esc_attr($s['account_id']); ?>"></td></tr>
-                        <tr><th>Endpoint (genel)</th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('endpoint')); ?>" value="<?php echo esc_attr($s['endpoint']); ?>" placeholder="s3.us-west-1.wasabisys.com"></td></tr>
-                        <tr><th>Region</th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('region')); ?>" value="<?php echo esc_attr($s['region']); ?>"></td></tr>
-                        <tr><th>Access Key ID</th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('access_key')); ?>" value="<?php echo esc_attr($s['access_key']); ?>"></td></tr>
-                        <tr><th>Secret Access Key</th><td><input type="password" class="regular-text" name="<?php echo esc_attr($this->field_name('secret_key')); ?>" value="<?php echo esc_attr($s['secret_key']); ?>"></td></tr>
-                        <tr><th>Bucket</th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('bucket')); ?>" value="<?php echo esc_attr($s['bucket']); ?>"></td></tr>
+                        <tr><th><?php esc_html_e('Account ID (R2)', 'cloud-media-offload'); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('account_id')); ?>" value="<?php echo esc_attr($s['account_id']); ?>"></td></tr>
+                        <tr><th><?php esc_html_e('Endpoint (generic)', 'cloud-media-offload'); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('endpoint')); ?>" value="<?php echo esc_attr($s['endpoint']); ?>" placeholder="s3.us-west-1.wasabisys.com"></td></tr>
+                        <tr><th><?php esc_html_e('Region', 'cloud-media-offload'); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('region')); ?>" value="<?php echo esc_attr($s['region']); ?>"></td></tr>
+                        <tr><th><?php esc_html_e('Access Key ID', 'cloud-media-offload'); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('access_key')); ?>" value="<?php echo esc_attr($s['access_key']); ?>"></td></tr>
+                        <tr><th><?php esc_html_e('Secret Access Key', 'cloud-media-offload'); ?></th><td><input type="password" class="regular-text" name="<?php echo esc_attr($this->field_name('secret_key')); ?>" value="<?php echo esc_attr($s['secret_key']); ?>"></td></tr>
+                        <tr><th><?php esc_html_e('Bucket', 'cloud-media-offload'); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('bucket')); ?>" value="<?php echo esc_attr($s['bucket']); ?>"></td></tr>
                     </table>
-                    <button type="button" class="button r2mo-prev">Geri</button>
-                    <button type="button" class="button button-primary r2mo-next">İleri</button>
+                    <button type="button" class="button r2mo-prev"><?php esc_html_e('Back', 'cloud-media-offload'); ?></button>
+                    <button type="button" class="button button-primary r2mo-next"><?php esc_html_e('Next', 'cloud-media-offload'); ?></button>
                 </div>
 
                 <div class="r2mo-wizard-step" data-step="3">
-                    <h2>3. Bağlantıyı test edin</h2>
-                    <p class="description">Önce ayarları kaydedin (alttaki "Kaydet"), ardından test edin.</p>
-                    <button type="button" class="button" id="r2mo-wizard-test">Bağlantıyı test et</button>
+                    <h2><?php esc_html_e('3. Test', 'cloud-media-offload'); ?></h2>
+                    <p class="description"><?php esc_html_e('Save your settings first, then test.', 'cloud-media-offload'); ?></p>
+                    <button type="button" class="button" id="r2mo-wizard-test"><?php esc_html_e('Test connection', 'cloud-media-offload'); ?></button>
                     <span id="r2mo-test-result" class="r2mo-test-result"></span>
                     <p style="margin-top:15px;">
-                        <button type="button" class="button r2mo-prev">Geri</button>
-                        <button type="button" class="button button-primary r2mo-next">İleri</button>
+                        <button type="button" class="button r2mo-prev"><?php esc_html_e('Back', 'cloud-media-offload'); ?></button>
+                        <button type="button" class="button button-primary r2mo-next"><?php esc_html_e('Next', 'cloud-media-offload'); ?></button>
                     </p>
                 </div>
 
                 <div class="r2mo-wizard-step" data-step="4">
-                    <h2>4. Sunum ve seçenekler</h2>
+                    <h2><?php esc_html_e('4. Presentation and options', 'cloud-media-offload'); ?></h2>
                     <table class="form-table" role="presentation">
-                        <tr><th>Public Base URL</th><td><input type="url" class="regular-text" name="<?php echo esc_attr($this->field_name('public_base')); ?>" value="<?php echo esc_attr($s['public_base']); ?>" placeholder="https://cdn.example.com"></td></tr>
-                        <tr><th>Key Prefix</th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('prefix')); ?>" value="<?php echo esc_attr($s['prefix']); ?>" placeholder="wp"></td></tr>
-                        <tr><th>Otomatik offload</th><td><label><input type="checkbox" name="<?php echo esc_attr($this->field_name('auto_offload')); ?>" value="1" <?php checked($s['auto_offload']); ?>> Yeni yüklemeleri R2'ye gönder</label></td></tr>
-                        <tr><th>Yerel kopyayı sil</th><td><label><input type="checkbox" name="<?php echo esc_attr($this->field_name('delete_local')); ?>" value="1" <?php checked($s['delete_local']); ?>> Doğruladıktan sonra sunucudan sil</label></td></tr>
+                        <tr><th><?php esc_html_e('Public Base URL', 'cloud-media-offload'); ?></th><td><input type="url" class="regular-text" name="<?php echo esc_attr($this->field_name('public_base')); ?>" value="<?php echo esc_attr($s['public_base']); ?>" placeholder="https://cdn.example.com"></td></tr>
+                        <tr><th><?php esc_html_e('Key Prefix', 'cloud-media-offload'); ?></th><td><input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('prefix')); ?>" value="<?php echo esc_attr($s['prefix']); ?>" placeholder="wp"></td></tr>
+                        <tr><th><?php esc_html_e('Automatic offload', 'cloud-media-offload'); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr($this->field_name('auto_offload')); ?>" value="1" <?php checked($s['auto_offload']); ?>> <?php esc_html_e('Send new uploads to R2', 'cloud-media-offload'); ?></label></td></tr>
+                        <tr><th><?php esc_html_e('Delete local copy', 'cloud-media-offload'); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr($this->field_name('delete_local')); ?>" value="1" <?php checked($s['delete_local']); ?>> <?php esc_html_e('Delete from the server after upload is verified on R2', 'cloud-media-offload'); ?></label></td></tr>
                     </table>
-                    <button type="button" class="button r2mo-prev">Geri</button>
-                    <button type="button" class="button button-primary r2mo-next">İleri</button>
+                    <button type="button" class="button r2mo-prev"><?php esc_html_e('Back', 'cloud-media-offload'); ?></button>
+                    <button type="button" class="button button-primary r2mo-next"><?php esc_html_e('Next', 'cloud-media-offload'); ?></button>
                 </div>
 
                 <div class="r2mo-wizard-step" data-step="5">
-                    <h2>5. Bitir</h2>
-                    <p>Ayarları kaydedin. Bekleyen <strong><?php echo (int) $pending; ?></strong> medya dosyası var.</p>
-                    <p class="description">Kaydettikten sonra <a href="<?php echo esc_url(admin_url('admin.php?page=r2mo-migrate')); ?>">Migrasyon</a> sayfasından mevcut medyayı taşıyın. Migrasyon bittikten sonra Ayarlar'dan <em>Tam sayfa URL yeniden yazma</em>yı açın.</p>
-                    <button type="button" class="button r2mo-prev">Geri</button>
-                    <?php submit_button('Kaydet', 'primary', 'submit', false); ?>
+                    <h2><?php esc_html_e('5. Finish', 'cloud-media-offload'); ?></h2>
+                    <p><?php echo sprintf( __('There are %d media file(s) pending.', 'cloud-media-offload'), (int) $pending ); ?></p>
+                    <p class="description"><?php esc_html_e('After saving, migrate the existing library from the Migration page. After migration completes, enable Full-page URL rewriting in Settings.', 'cloud-media-offload'); ?> <a href="<?php echo esc_url(admin_url('admin.php?page=r2mo-migrate')); ?>"><?php esc_html_e('Migration', 'cloud-media-offload'); ?></a>.</p>
+                    <button type="button" class="button r2mo-prev"><?php esc_html_e('Back', 'cloud-media-offload'); ?></button>
+                    <?php submit_button(__('Save', 'cloud-media-offload'), 'primary', 'submit', false); ?>
                 </div>
             </form>
         </div>
@@ -202,10 +211,10 @@ class R2MO_Admin {
         $pending = $this->migrator->count_pending();
         ?>
         <div class="wrap r2mo">
-            <h1>R2 Migrasyon</h1>
-            <p>R2'ye taşınmamış medya: <strong id="r2mo-pending"><?php echo (int) $pending; ?></strong></p>
-            <button class="button button-primary" id="r2mo-start" data-total="<?php echo (int) $pending; ?>">Taşımayı başlat</button>
-            <button class="button" id="r2mo-stop" disabled>Durdur</button>
+            <h1><?php esc_html_e('Cloud Migration', 'cloud-media-offload'); ?></h1>
+            <p><?php esc_html_e('Media not yet moved to R2:', 'cloud-media-offload'); ?> <strong id="r2mo-pending"><?php echo (int) $pending; ?></strong></p>
+            <button class="button button-primary" id="r2mo-start" data-total="<?php echo (int) $pending; ?>"><?php esc_html_e('Start migration', 'cloud-media-offload'); ?></button>
+            <button class="button" id="r2mo-stop" disabled><?php esc_html_e('Stop', 'cloud-media-offload'); ?></button>
             <div class="r2mo-bar-wrap"><div id="r2mo-bar" class="r2mo-bar">0%</div></div>
             <pre id="r2mo-log" class="r2mo-log"></pre>
         </div>
