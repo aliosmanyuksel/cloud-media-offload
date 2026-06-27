@@ -59,3 +59,38 @@
     }
     show(1);
 })();
+
+(function () {
+    var startBtn = document.getElementById('r2mo-start');
+    if (!startBtn) { return; }
+    var stopBtn = document.getElementById('r2mo-stop');
+    var bar = document.getElementById('r2mo-bar');
+    var log = document.getElementById('r2mo-log');
+    var pendingEl = document.getElementById('r2mo-pending');
+    var total = parseInt(startBtn.getAttribute('data-total'), 10) || 0;
+    var running = false;
+
+    function addLog(t) { log.textContent += t + '\n'; log.scrollTop = log.scrollHeight; }
+    function toggle(on) { running = on; startBtn.disabled = on; stopBtn.disabled = !on; }
+
+    function batch() {
+        if (!running) { return; }
+        window.R2MO_post('r2mo_migrate_batch').then(function (d) {
+            if (!d.success) { addLog('HATA: ' + d.data); toggle(false); return; }
+            (d.data.errors || []).forEach(addLog);
+            var pct = total ? Math.round(((total - d.data.remaining) / total) * 100) : 100;
+            bar.style.width = pct + '%';
+            bar.textContent = pct + '%';
+            pendingEl.textContent = d.data.remaining;
+            if (d.data.remaining > 0 && d.data.processed > 0) {
+                batch();
+            } else {
+                addLog('Tamamlandı. Kalan: ' + d.data.remaining);
+                toggle(false);
+            }
+        }).catch(function (e) { addLog('Bağlantı hatası: ' + e); toggle(false); });
+    }
+
+    startBtn.addEventListener('click', function () { toggle(true); addLog('Başladı...'); batch(); });
+    stopBtn.addEventListener('click', function () { toggle(false); addLog('Durduruldu.'); });
+})();

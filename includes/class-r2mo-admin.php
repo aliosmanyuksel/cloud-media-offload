@@ -199,6 +199,16 @@ class R2MO_Admin {
         if (!current_user_can('manage_options')) {
             return;
         }
-        echo '<div class="wrap r2mo"><h1>Migrasyon</h1><p>Bu sayfa Task 12\'de doldurulacak.</p></div>';
+        $pending = $this->migrator->count_pending();
+        ?>
+        <div class="wrap r2mo">
+            <h1>R2 Migrasyon</h1>
+            <p>R2'ye taşınmamış medya: <strong id="r2mo-pending"><?php echo (int) $pending; ?></strong></p>
+            <button class="button button-primary" id="r2mo-start" data-total="<?php echo (int) $pending; ?>">Taşımayı başlat</button>
+            <button class="button" id="r2mo-stop" disabled>Durdur</button>
+            <div class="r2mo-bar-wrap"><div id="r2mo-bar" class="r2mo-bar">0%</div></div>
+            <pre id="r2mo-log" class="r2mo-log"></pre>
+        </div>
+        <?php
     }
 }
