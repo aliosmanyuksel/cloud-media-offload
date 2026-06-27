@@ -4,7 +4,7 @@ Tags: media offload, cloudflare r2, amazon s3, cdn, woocommerce
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,10 +56,16 @@ Yes. Product and gallery images use the standard media library. The optional ful
 
 == Changelog ==
 
+= 1.0.1 =
+* Fix: Prevent uninstall.php from deleting _r2mo_offloaded post metadata during plugin deletion, preserving offload state on reinstall.
+
 = 1.0.0 =
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+Prevent uninstall.php from deleting _r2mo_offloaded post metadata during plugin deletion, preserving offload state on reinstall.
 
 = 1.0.0 =
 Initial release.
