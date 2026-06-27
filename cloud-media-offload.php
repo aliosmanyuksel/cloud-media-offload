@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Cloud Media Offload
  * Description: Offload WordPress & WooCommerce media to Cloudflare R2 or any S3-compatible storage and serve it from your CDN. No SDK — AWS Signature V4 signed with plain cURL.
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: Ali Osman Yüksel
  * Author URI: https://alios.tr
  * License: GPL-2.0-or-later
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('R2MO_VERSION', '1.0.1');
+define('R2MO_VERSION', '1.1.0');
 define('R2MO_FILE', __FILE__);
 define('R2MO_DIR', plugin_dir_path(__FILE__));
 define('R2MO_URL', plugin_dir_url(__FILE__));

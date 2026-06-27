@@ -35,6 +35,16 @@ class R2MO_Plugin {
             load_plugin_textdomain('cloud-media-offload', false, dirname(plugin_basename(R2MO_FILE)) . '/languages');
         });
 
+        // Cron schedules and actions
+        add_filter('cron_schedules', function ($schedules) {
+            $schedules['r2mo_1min'] = [
+                'interval' => 60,
+                'display'  => __('Every Minute', 'cloud-media-offload'),
+            ];
+            return $schedules;
+        });
+        add_action('r2mo_cron_migration_batch', [$this->migrator, 'cron_migrate_batch']);
+
         // Settings + admin
         add_action('admin_init', [$this->admin, 'register_settings']);
         add_action('admin_menu', [$this->admin, 'menu']);
@@ -55,6 +65,9 @@ class R2MO_Plugin {
         // AJAX
         add_action('wp_ajax_r2mo_migrate_batch', [$this->migrator, 'ajax_migrate_batch']);
         add_action('wp_ajax_r2mo_test', [$this->migrator, 'ajax_test_connection']);
+        add_action('wp_ajax_r2mo_start_bg_migration', [$this->migrator, 'ajax_start_background_migration']);
+        add_action('wp_ajax_r2mo_stop_bg_migration', [$this->migrator, 'ajax_stop_background_migration']);
+        add_action('wp_ajax_r2mo_get_bg_migration_status', [$this->migrator, 'ajax_get_background_migration_status']);
 
         // WP-CLI
         if (defined('WP_CLI') && WP_CLI) {

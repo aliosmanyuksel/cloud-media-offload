@@ -94,3 +94,82 @@
     startBtn.addEventListener('click', function () { toggle(true); addLog(R2MO.i18n.started); batch(); });
     stopBtn.addEventListener('click', function () { toggle(false); addLog(R2MO.i18n.stopped); });
 })();
+
+(function () {
+    var bgStartBtn = document.getElementById('r2mo-bg-start');
+    if (!bgStartBtn) { return; }
+    var bgStopBtn = document.getElementById('r2mo-bg-stop');
+    var bgStatus = document.getElementById('r2mo-bg-status');
+    var bgProcessed = document.getElementById('r2mo-bg-processed');
+    var bgLog = document.getElementById('r2mo-bg-log');
+    var pendingEl = document.getElementById('r2mo-pending');
+    var pollTimer = null;
+
+    function addBgLog(t) {
+        bgLog.textContent += t + '\n';
+        bgLog.scrollTop = bgLog.scrollHeight;
+    }
+
+    function updateBgUI(statusData) {
+        var active = parseInt(statusData.active, 10) === 1;
+        bgStartBtn.disabled = active;
+        bgStopBtn.disabled = !active;
+        pendingEl.textContent = statusData.remaining;
+        bgProcessed.textContent = statusData.processed;
+
+        if (active) {
+            bgStatus.textContent = 'Active (Cron Scheduled)';
+            bgStatus.style.background = '#d1e7dd';
+            bgStatus.style.color = '#0f5132';
+        } else {
+            bgStatus.textContent = 'Idle (Stopped)';
+            bgStatus.style.background = '#f8d7da';
+            bgStatus.style.color = '#842029';
+        }
+
+        // Show errors
+        bgLog.textContent = '';
+        if (statusData.errors && statusData.errors.length > 0) {
+            statusData.errors.forEach(addBgLog);
+        } else {
+            bgLog.textContent = 'No errors recorded.';
+        }
+    }
+
+    function poll() {
+        window.R2MO_post('r2mo_get_bg_migration_status').then(function (d) {
+            if (d.success) {
+                updateBgUI(d.data);
+                if (parseInt(d.data.active, 10) === 1) {
+                    if (!pollTimer) {
+                        pollTimer = setInterval(poll, 5000);
+                    }
+                } else {
+                    if (pollTimer) {
+                        clearInterval(pollTimer);
+                        pollTimer = null;
+                    }
+                }
+            }
+        });
+    }
+
+    bgStartBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        bgStartBtn.disabled = true;
+        window.R2MO_post('r2mo_start_bg_migration').then(function (d) {
+            poll();
+        });
+    });
+
+    bgStopBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        bgStopBtn.disabled = true;
+        window.R2MO_post('r2mo_stop_bg_migration').then(function (d) {
+            poll();
+        });
+    });
+
+    // Initial check
+    poll();
+})();

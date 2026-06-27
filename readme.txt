@@ -4,7 +4,7 @@ Tags: media offload, cloudflare r2, amazon s3, cdn, woocommerce
 Requires at least: 5.6
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -56,6 +56,10 @@ Yes. Product and gallery images use the standard media library. The optional ful
 
 == Changelog ==
 
+= 1.1.0 =
+* Feature: Added WP-Cron based Background Migration to allow offloading large libraries (e.g. 30,000+ files) asynchronously without keeping the browser tab open.
+* Feature: Redesigned Migration UI in admin area with two cards (Background and Browser migration).
+
 = 1.0.1 =
 * Fix: Prevent uninstall.php from deleting _r2mo_offloaded post metadata during plugin deletion, preserving offload state on reinstall.
 
@@ -63,6 +67,9 @@ Yes. Product and gallery images use the standard media library. The optional ful
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Added cron-based background migration and redesigned admin interface.
 
 = 1.0.1 =
 Prevent uninstall.php from deleting _r2mo_offloaded post metadata during plugin deletion, preserving offload state on reinstall.

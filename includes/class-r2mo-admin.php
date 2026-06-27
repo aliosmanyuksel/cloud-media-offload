@@ -223,10 +223,47 @@ class R2MO_Admin {
         <div class="wrap r2mo">
             <h1><?php esc_html_e('Cloud Migration', 'cloud-media-offload'); ?></h1>
             <p><?php esc_html_e('Media not yet moved to R2:', 'cloud-media-offload'); ?> <strong id="r2mo-pending"><?php echo (int) $pending; ?></strong></p>
-            <button class="button button-primary" id="r2mo-start" data-total="<?php echo (int) $pending; ?>"><?php esc_html_e('Start migration', 'cloud-media-offload'); ?></button>
-            <button class="button" id="r2mo-stop" disabled><?php esc_html_e('Stop', 'cloud-media-offload'); ?></button>
-            <div class="r2mo-bar-wrap"><div id="r2mo-bar" class="r2mo-bar">0%</div></div>
-            <pre id="r2mo-log" class="r2mo-log"></pre>
+
+            <div class="r2mo-migration-panels" style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
+                
+                <!-- Card 1: Background Migration (Recommended) -->
+                <div class="r2mo-card" style="flex: 1; min-width: 320px; background: #fff; border: 1px solid #ccd0d4; padding: 20px; box-shadow: 0 1px 1px rgba(0,0,0,.04); border-radius: 4px;">
+                    <h2><?php esc_html_e('Background Migration (Recommended)', 'cloud-media-offload'); ?></h2>
+                    <p class="description"><?php esc_html_e('Runs asynchronously in the background. You can close this tab and the migration will continue on your server.', 'cloud-media-offload'); ?></p>
+                    
+                    <div style="margin: 20px 0;">
+                        <span class="r2mo-bg-status-badge" id="r2mo-bg-status" style="display: inline-block; padding: 4px 8px; border-radius: 3px; font-weight: bold; background: #f0f0f1; color: #50575e;">
+                            <?php esc_html_e('Loading…', 'cloud-media-offload'); ?>
+                        </span>
+                        <div style="margin-top: 10px; font-size: 13px;">
+                            <?php esc_html_e('Processed in this session:', 'cloud-media-offload'); ?> <strong id="r2mo-bg-processed">0</strong>
+                        </div>
+                    </div>
+
+                    <button class="button button-primary" id="r2mo-bg-start"><?php esc_html_e('Start Background Migration', 'cloud-media-offload'); ?></button>
+                    <button class="button" id="r2mo-bg-stop" disabled><?php esc_html_e('Stop', 'cloud-media-offload'); ?></button>
+                    
+                    <pre id="r2mo-bg-log" class="r2mo-log" style="margin-top: 20px; max-height: 150px; overflow-y: auto; background: #f6f7f7; padding: 10px; border: 1px solid #dcdcde; font-family: monospace; font-size: 11px;"></pre>
+                </div>
+
+                <!-- Card 2: Browser Migration -->
+                <div class="r2mo-card" style="flex: 1; min-width: 320px; background: #fff; border: 1px solid #ccd0d4; padding: 20px; box-shadow: 0 1px 1px rgba(0,0,0,.04); border-radius: 4px;">
+                    <h2><?php esc_html_e('Browser Migration', 'cloud-media-offload'); ?></h2>
+                    <p class="description"><?php esc_html_e('Runs via AJAX loops in your browser. You MUST keep this tab open until the migration completes.', 'cloud-media-offload'); ?></p>
+                    
+                    <div style="margin: 20px 0;">
+                        <div class="r2mo-bar-wrap" style="background: #f0f0f1; border-radius: 3px; overflow: hidden; height: 20px; margin-bottom: 10px;">
+                            <div id="r2mo-bar" class="r2mo-bar" style="background: #2271b1; color: #fff; text-align: center; line-height: 20px; font-weight: bold; width: 0%;">0%</div>
+                        </div>
+                    </div>
+
+                    <button class="button" id="r2mo-start" data-total="<?php echo (int) $pending; ?>"><?php esc_html_e('Start Browser Migration', 'cloud-media-offload'); ?></button>
+                    <button class="button" id="r2mo-stop" disabled><?php esc_html_e('Stop', 'cloud-media-offload'); ?></button>
+                    
+                    <pre id="r2mo-log" class="r2mo-log" style="margin-top: 20px; max-height: 150px; overflow-y: auto; background: #f6f7f7; padding: 10px; border: 1px solid #dcdcde; font-family: monospace; font-size: 11px;"></pre>
+                </div>
+
+            </div>
         </div>
         <?php
     }
