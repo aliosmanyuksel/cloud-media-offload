@@ -1,0 +1,9 @@
+.r2mo .r2mo-test-result { margin-left: 10px; font-weight: 600; }
+.r2mo-bar-wrap { margin-top: 15px; max-width: 600px; background: #eee; border-radius: 4px; overflow: hidden; }
+.r2mo-bar { height: 24px; width: 0; background: #2271b1; color: #fff; text-align: center; line-height: 24px; transition: width .3s; }
+.r2mo-log { margin-top: 15px; max-height: 320px; overflow: auto; background: #fff; border: 1px solid #ccc; padding: 10px; white-space: pre-wrap; }
+.r2mo-wizard-step { display: none; }
+.r2mo-wizard-step.active { display: block; }
+.r2mo-steps { display: flex; gap: 8px; margin: 15px 0; }
+.r2mo-steps span { padding: 4px 10px; border-radius: 12px; background: #eee; }
+.r2mo-steps span.on { background: #2271b1; color: #fff; }
