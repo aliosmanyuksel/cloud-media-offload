@@ -1,7 +1,7 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Berkant Mobilya
+# Translation template for Cloud Media Offload.
+# Copyright (C) 2026 Ali Osman Yüksel
 # This file is distributed under the same license as the Cloud Media Offload package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Ali Osman Yüksel <info@alios.tr>, 2026.
 #
 #, fuzzy
 msgid ""
@@ -10,8 +10,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-27 16:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: Ali Osman Yüksel <info@alios.tr>\n"
+"Language-Team: aliOS Yazılım ve Danışmanlığı <info@alios.tr>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
