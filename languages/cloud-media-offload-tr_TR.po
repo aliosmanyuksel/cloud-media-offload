@@ -323,3 +323,36 @@ msgstr "%d dosya yüklendi ve doğrulandı"
 msgid "cURL extension not available"
 msgstr "cURL eklentisi yok"
 
+msgid "Every Minute"
+msgstr "Her Dakika"
+
+msgid "Background Migration (Recommended)"
+msgstr "Arka Plan Göçü (Önerilen)"
+
+msgid "Runs asynchronously in the background. You can close this tab and the migration will continue on your server."
+msgstr "Arka planda asenkron olarak çalışır. Bu sekmeyi kapatabilirsiniz ve göç işlemi sunucunuzda devam edecektir."
+
+msgid "Loading…"
+msgstr "Yükleniyor…"
+
+msgid "Processed in this session:"
+msgstr "Bu oturumda işlenen:"
+
+msgid "Start Background Migration"
+msgstr "Arka Plan Göçünü Başlat"
+
+msgid "Background migration started"
+msgstr "Arka plan göçü başlatıldı"
+
+msgid "Background migration stopped"
+msgstr "Arka plan göçü durduruldu"
+
+msgid "Browser Migration"
+msgstr "Tarayıcı Göçü"
+
+msgid "Runs via AJAX loops in your browser. You MUST keep this tab open until the migration completes."
+msgstr "Tarayıcınızdaki AJAX döngüleriyle çalışır. Göç tamamlanana kadar bu sekmeyi açık tutmalısınız."
+
+msgid "Start Browser Migration"
+msgstr "Tarayıcı Göçünü Başlat"
+
