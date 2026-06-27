@@ -1,0 +1,6 @@
+# R2 Media Offload — translation template
+# Text Domain: r2-media-offload
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: \n"
