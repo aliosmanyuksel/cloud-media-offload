@@ -82,7 +82,7 @@ class R2MO_Admin {
                     </td></tr>
                     <tr><th><?php esc_html_e('Region', 'cloud-media-offload'); ?><?php echo $this->locked_note('region'); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('region')); ?>" value="<?php echo esc_attr($s['region']); ?>">
-                        <p class="description"><?php esc_html_e('Use', 'cloud-media-offload'); ?> <code>auto</code> <?php esc_html_e('for R2.', 'cloud-media-offload'); ?></p>
+                        <p class="description"><?php printf( esc_html__( 'Use %s for R2.', 'cloud-media-offload' ), '<code>auto</code>' ); ?></p>
                     </td></tr>
                     <tr><th><?php esc_html_e('Path-style', 'cloud-media-offload'); ?></th><td>
                         <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('path_style')); ?>" value="1" <?php checked($s['path_style']); ?>> <?php esc_html_e('Use path-style URLs (on for R2 and most S3-compatible)', 'cloud-media-offload'); ?></label>

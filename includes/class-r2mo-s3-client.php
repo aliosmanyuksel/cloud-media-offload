@@ -110,6 +110,8 @@ class R2MO_S3_Client {
             "Host: {$host}",
         ];
 
+        // Raw cURL (not WP HTTP API) so large PUT bodies stream from disk via
+        // CURLOPT_INFILE instead of being buffered into memory. TLS is verified.
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_CUSTOMREQUEST  => $method,
@@ -117,6 +119,8 @@ class R2MO_S3_Client {
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT        => 120,
             CURLOPT_CONNECTTIMEOUT => 15,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
         ]);
         if ($method === 'HEAD') {
             curl_setopt($ch, CURLOPT_NOBODY, true);

@@ -1,5 +1,5 @@
 === Cloud Media Offload ===
-Contributors: berkantmobilya
+Contributors: aliosmanyuksel
 Tags: media offload, cloudflare r2, amazon s3, cdn, woocommerce
 Requires at least: 5.6
 Tested up to: 6.8

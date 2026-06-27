@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Media Offload\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-27 16:04+0300\n"
+"POT-Creation-Date: 2026-06-27 16:14+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -95,11 +95,8 @@ msgid "Region"
 msgstr ""
 
 #: includes/class-r2mo-admin.php:85
-msgid "Use"
-msgstr ""
-
-#: includes/class-r2mo-admin.php:85
-msgid "for R2."
+#, php-format
+msgid "Use %s for R2."
 msgstr ""
 
 #: includes/class-r2mo-admin.php:87

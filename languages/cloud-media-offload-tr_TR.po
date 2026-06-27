@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cloud Media Offload\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-27 16:04+0300\n"
+"POT-Creation-Date: 2026-06-27 16:14+0300\n"
 "PO-Revision-Date: 2026-06-27 16:04+0300\n"
 "Last-Translator: Berkant Mobilya <info@berkantmobilya.com>\n"
 "Language-Team: \n"
@@ -93,12 +93,9 @@ msgid "Region"
 msgstr "Region"
 
 #: includes/class-r2mo-admin.php:85
-msgid "Use"
-msgstr "Kullan"
-
-#: includes/class-r2mo-admin.php:85
-msgid "for R2."
-msgstr "R2 için."
+#, php-format
+msgid "Use %s for R2."
+msgstr "R2 için %s kullanın."
 
 #: includes/class-r2mo-admin.php:87
 msgid "Path-style"
@@ -245,7 +242,8 @@ msgid ""
 "migration completes, enable Full-page URL rewriting in Settings."
 msgstr ""
 "Kaydettikten sonra mevcut kütüphaneyi Migrasyon sayfasından taşıyın. "
-"Migrasyon tamamlandıktan sonra Ayarlar'dan Tam sayfa URL yeniden yazmayı açın."
+"Migrasyon tamamlandıktan sonra Ayarlar'dan Tam sayfa URL yeniden yazmayı "
+"açın."
 
 #: includes/class-r2mo-admin.php:200
 msgid "Save"
@@ -324,3 +322,4 @@ msgstr "%d dosya yüklendi ve doğrulandı"
 #: includes/class-r2mo-s3-client.php:68
 msgid "cURL extension not available"
 msgstr "cURL eklentisi yok"
+
