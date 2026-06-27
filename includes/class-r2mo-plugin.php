@@ -31,7 +31,7 @@ class R2MO_Plugin {
     private function hooks() {
         // i18n
         add_action('init', function () {
-            load_plugin_textdomain('r2-media-offload', false, dirname(plugin_basename(R2MO_FILE)) . '/languages');
+            load_plugin_textdomain('cloud-media-offload', false, dirname(plugin_basename(R2MO_FILE)) . '/languages');
         });
 
         // Settings + admin
