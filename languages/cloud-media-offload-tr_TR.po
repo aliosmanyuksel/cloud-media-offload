@@ -1,0 +1,326 @@
+# Turkish translation of Cloud Media Offload
+# Copyright (C) 2026 Berkant Mobilya
+# This file is distributed under the same license as the Cloud Media Offload package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Cloud Media Offload\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-27 16:04+0300\n"
+"PO-Revision-Date: 2026-06-27 16:04+0300\n"
+"Last-Translator: Berkant Mobilya <info@berkantmobilya.com>\n"
+"Language-Team: \n"
+"Language: tr_TR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: cloud-media-offload\n"
+
+#: includes/class-r2mo-admin.php:21 includes/class-r2mo-admin.php:67
+msgid "Cloud Media Offload"
+msgstr "Cloud Media Offload"
+
+#: includes/class-r2mo-admin.php:21
+msgid "Cloud Offload"
+msgstr "Cloud Offload"
+
+#: includes/class-r2mo-admin.php:24
+msgid "Settings"
+msgstr "Ayarlar"
+
+#: includes/class-r2mo-admin.php:25 includes/class-r2mo-admin.php:137
+msgid "Setup Wizard"
+msgstr "Kurulum Sihirbazı"
+
+#: includes/class-r2mo-admin.php:26 includes/class-r2mo-admin.php:198
+msgid "Migration"
+msgstr "Migrasyon"
+
+#: includes/class-r2mo-admin.php:39
+msgid "Testing…"
+msgstr "Test ediliyor…"
+
+#: includes/class-r2mo-admin.php:40
+msgid "Error:"
+msgstr "Hata:"
+
+#: includes/class-r2mo-admin.php:41
+msgid "Connection error:"
+msgstr "Bağlantı hatası:"
+
+#: includes/class-r2mo-admin.php:42
+msgid "Started…"
+msgstr "Başladı…"
+
+#: includes/class-r2mo-admin.php:43
+msgid "Stopped."
+msgstr "Durduruldu."
+
+#: includes/class-r2mo-admin.php:44
+msgid "Completed. Remaining:"
+msgstr "Tamamlandı. Kalan:"
+
+#: includes/class-r2mo-admin.php:45
+msgid "ERROR:"
+msgstr "HATA:"
+
+#: includes/class-r2mo-admin.php:56
+msgid "(managed via wp-config)"
+msgstr "(wp-config ile yönetiliyor)"
+
+#: includes/class-r2mo-admin.php:71
+msgid "Provider"
+msgstr "Sağlayıcı"
+
+#: includes/class-r2mo-admin.php:73
+msgid "Cloudflare R2"
+msgstr "Cloudflare R2"
+
+#: includes/class-r2mo-admin.php:74
+msgid "Generic S3-compatible"
+msgstr "Genel S3-uyumlu"
+
+#: includes/class-r2mo-admin.php:77 includes/class-r2mo-admin.php:161
+msgid "Account ID (R2)"
+msgstr "Account ID (R2)"
+
+#: includes/class-r2mo-admin.php:80 includes/class-r2mo-admin.php:162
+msgid "Endpoint (generic)"
+msgstr "Endpoint (genel)"
+
+#: includes/class-r2mo-admin.php:83 includes/class-r2mo-admin.php:163
+msgid "Region"
+msgstr "Region"
+
+#: includes/class-r2mo-admin.php:85
+msgid "Use"
+msgstr "Kullan"
+
+#: includes/class-r2mo-admin.php:85
+msgid "for R2."
+msgstr "R2 için."
+
+#: includes/class-r2mo-admin.php:87
+msgid "Path-style"
+msgstr "Path-style"
+
+#: includes/class-r2mo-admin.php:88
+msgid "Use path-style URLs (on for R2 and most S3-compatible)"
+msgstr "Path-style URL kullan (R2 ve çoğu S3-uyumlu için açık)"
+
+#: includes/class-r2mo-admin.php:90 includes/class-r2mo-admin.php:164
+msgid "Access Key ID"
+msgstr "Access Key ID"
+
+#: includes/class-r2mo-admin.php:93 includes/class-r2mo-admin.php:165
+msgid "Secret Access Key"
+msgstr "Secret Access Key"
+
+#: includes/class-r2mo-admin.php:96 includes/class-r2mo-admin.php:166
+msgid "Bucket"
+msgstr "Bucket"
+
+#: includes/class-r2mo-admin.php:99 includes/class-r2mo-admin.php:186
+msgid "Public Base URL"
+msgstr "Public Base URL"
+
+#: includes/class-r2mo-admin.php:101
+msgid "Custom domain or r2.dev address. URL rewriting uses this."
+msgstr "Custom domain veya r2.dev adresi. URL yeniden yazma bunu kullanır."
+
+#: includes/class-r2mo-admin.php:103 includes/class-r2mo-admin.php:187
+msgid "Key Prefix"
+msgstr "Key Prefix"
+
+#: includes/class-r2mo-admin.php:106 includes/class-r2mo-admin.php:188
+msgid "Automatic offload"
+msgstr "Otomatik offload"
+
+#: includes/class-r2mo-admin.php:107 includes/class-r2mo-admin.php:188
+msgid "Send new uploads to R2"
+msgstr "Yeni yüklemeleri R2'ye gönder"
+
+#: includes/class-r2mo-admin.php:109
+msgid "Full-page URL rewriting"
+msgstr "Tam sayfa URL yeniden yazma"
+
+#: includes/class-r2mo-admin.php:110
+msgid "Rewrite all local media URLs across the page via output buffering"
+msgstr "Çıktı tamponuyla tüm sayfadaki yerel medya URL'lerini çevir"
+
+#: includes/class-r2mo-admin.php:111
+msgid ""
+"Enable only after migration completes (0 pending) — otherwise not-yet-"
+"migrated images may 404."
+msgstr ""
+"Yalnızca migrasyon tamamlandıktan (0 bekleyen) sonra açın — aksi halde henüz "
+"taşınmamış görseller 404 verebilir."
+
+#: includes/class-r2mo-admin.php:113 includes/class-r2mo-admin.php:189
+msgid "Delete local copy"
+msgstr "Yerel kopyayı sil"
+
+#: includes/class-r2mo-admin.php:114 includes/class-r2mo-admin.php:189
+msgid "Delete from the server after upload is verified on R2"
+msgstr "R2'ye yükleyip doğruladıktan sonra sunucudan sil"
+
+#: includes/class-r2mo-admin.php:116
+msgid "Batch size"
+msgstr "Batch boyutu"
+
+#: includes/class-r2mo-admin.php:122
+msgid "Connection test"
+msgstr "Bağlantı testi"
+
+#: includes/class-r2mo-admin.php:123 includes/class-r2mo-admin.php:175
+msgid "Test connection"
+msgstr "Bağlantıyı test et"
+
+#: includes/class-r2mo-admin.php:139
+msgid "1. Provider"
+msgstr "1. Sağlayıcı"
+
+#: includes/class-r2mo-admin.php:140 includes/class-r2mo-admin.php:158
+msgid "2. Credentials"
+msgstr "2. Kimlik bilgileri"
+
+#: includes/class-r2mo-admin.php:141 includes/class-r2mo-admin.php:173
+msgid "3. Test"
+msgstr "3. Test"
+
+#: includes/class-r2mo-admin.php:142
+msgid "4. Options"
+msgstr "4. Seçenekler"
+
+#: includes/class-r2mo-admin.php:143 includes/class-r2mo-admin.php:196
+msgid "5. Finish"
+msgstr "5. Bitir"
+
+#: includes/class-r2mo-admin.php:149
+msgid "1. Choose your storage provider"
+msgstr "1. Depolama sağlayıcınızı seçin"
+
+#: includes/class-r2mo-admin.php:151
+msgid "Cloudflare R2 (recommended — zero egress)"
+msgstr "Cloudflare R2 (önerilen — sıfır çıkış ücreti)"
+
+#: includes/class-r2mo-admin.php:152
+msgid "Generic S3-compatible (Wasabi, Backblaze B2, DigitalOcean, MinIO)"
+msgstr "Genel S3-uyumlu (Wasabi, Backblaze B2, DigitalOcean, MinIO)"
+
+#: includes/class-r2mo-admin.php:154 includes/class-r2mo-admin.php:169
+#: includes/class-r2mo-admin.php:179 includes/class-r2mo-admin.php:192
+msgid "Next"
+msgstr "İleri"
+
+#: includes/class-r2mo-admin.php:159
+msgid ""
+"You may also define these values as constants in wp-config.php (e.g. "
+"R2MO_SECRET_KEY); a constant overrides the database value."
+msgstr ""
+"Bu değerleri wp-config.php dosyasında sabit olarak da tanımlayabilirsiniz "
+"(ör. R2MO_SECRET_KEY); bir sabit, veritabanı değerini geçersiz kılar."
+
+#: includes/class-r2mo-admin.php:168 includes/class-r2mo-admin.php:178
+#: includes/class-r2mo-admin.php:191 includes/class-r2mo-admin.php:199
+msgid "Back"
+msgstr "Geri"
+
+#: includes/class-r2mo-admin.php:174
+msgid "Save your settings first, then test."
+msgstr "Önce ayarlarınızı kaydedin, ardından test edin."
+
+#: includes/class-r2mo-admin.php:184
+msgid "4. Presentation and options"
+msgstr "4. Sunum ve seçenekler"
+
+#: includes/class-r2mo-admin.php:197
+#, php-format
+msgid "There are %d media file(s) pending."
+msgstr "%d medya dosyası beklemede."
+
+#: includes/class-r2mo-admin.php:198
+msgid ""
+"After saving, migrate the existing library from the Migration page. After "
+"migration completes, enable Full-page URL rewriting in Settings."
+msgstr ""
+"Kaydettikten sonra mevcut kütüphaneyi Migrasyon sayfasından taşıyın. "
+"Migrasyon tamamlandıktan sonra Ayarlar'dan Tam sayfa URL yeniden yazmayı açın."
+
+#: includes/class-r2mo-admin.php:200
+msgid "Save"
+msgstr "Kaydet"
+
+#: includes/class-r2mo-admin.php:214
+msgid "Cloud Migration"
+msgstr "Cloud Migrasyon"
+
+#: includes/class-r2mo-admin.php:215
+msgid "Media not yet moved to R2:"
+msgstr "R2'ye taşınmamış medya:"
+
+#: includes/class-r2mo-admin.php:216
+msgid "Start migration"
+msgstr "Taşımayı başlat"
+
+#: includes/class-r2mo-admin.php:217
+msgid "Stop"
+msgstr "Durdur"
+
+#: includes/class-r2mo-migrator.php:40 includes/class-r2mo-migrator.php:69
+msgid "Permission denied"
+msgstr "İzin yok"
+
+#: includes/class-r2mo-migrator.php:82
+msgid "Connection successful"
+msgstr "Bağlantı başarılı"
+
+#: includes/class-r2mo-migrator.php:84
+#, php-format
+msgid "HTTP %1$d — %2$s %3$s"
+msgstr "HTTP %1$d — %2$s %3$s"
+
+#: includes/class-r2mo-migrator.php:93
+msgid "delete-local enabled: uploaded files will be deleted locally."
+msgstr "delete-local etkin: yüklenen dosyalar yerelden silinecek."
+
+#: includes/class-r2mo-migrator.php:97
+#, php-format
+msgid "To migrate: %d attachment(s)"
+msgstr "Taşınacak: %d ek dosya"
+
+#: includes/class-r2mo-migrator.php:109
+#, php-format
+msgid "Done. Succeeded: %1$d, Failed: %2$d"
+msgstr "Bitti. Başarılı: %1$d, Hatalı: %2$d"
+
+#: includes/class-r2mo-offloader.php:75
+msgid "R2 settings are incomplete"
+msgstr "R2 ayarları eksik"
+
+#: includes/class-r2mo-offloader.php:80
+msgid "No files found"
+msgstr "Dosya bulunamadı"
+
+#: includes/class-r2mo-offloader.php:97
+#, php-format
+msgid "Upload error (%1$s): HTTP %2$d %3$s"
+msgstr "Yükleme hatası (%1$s): HTTP %2$d %3$s"
+
+#: includes/class-r2mo-offloader.php:102
+#, php-format
+msgid "Verification failed (%s): not found on R2"
+msgstr "Doğrulama başarısız (%s): R2'de bulunamadı"
+
+#: includes/class-r2mo-offloader.php:110
+msgid "No files found (missing on disk)"
+msgstr "Dosya bulunamadı (disk üzerinde yok)"
+
+#: includes/class-r2mo-offloader.php:124
+#, php-format
+msgid "%d files uploaded and verified"
+msgstr "%d dosya yüklendi ve doğrulandı"
+
+#: includes/class-r2mo-s3-client.php:68
+msgid "cURL extension not available"
+msgstr "cURL eklentisi yok"
