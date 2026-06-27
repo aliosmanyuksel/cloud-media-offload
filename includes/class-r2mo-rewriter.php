@@ -12,12 +12,18 @@ class R2MO_Rewriter {
         return $prefix !== '' ? $base . '/' . $prefix : $base;
     }
 
-    /** Pure: swap every occurrence of the uploads base URL for the target. */
+    /**
+     * Pure: swap every occurrence of the uploads base URL for the target.
+     * The needle is delimited with a trailing slash so a sibling directory
+     * sharing the base as a prefix (e.g. ".../uploads-backup/") is not corrupted.
+     */
     public static function swap_base($subject, $baseurl, $target) {
         if ($baseurl === '' || $target === '') {
             return $subject;
         }
-        return str_replace($baseurl, rtrim($target, '/'), $subject);
+        $needle      = rtrim($baseurl, '/') . '/';
+        $replacement = rtrim($target, '/') . '/';
+        return str_replace($needle, $replacement, $subject);
     }
 
     /* ---------------- WordPress glue ---------------- */

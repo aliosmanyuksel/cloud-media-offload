@@ -18,3 +18,13 @@ test('rewriter: swap_base is a no-op when base or target is empty', function () 
     assert_eq('x', R2MO_Rewriter::swap_base('x', '', 'https://cdn'));
     assert_eq('x', R2MO_Rewriter::swap_base('x', 'https://site', ''));
 });
+
+test('rewriter: swap_base does not corrupt a sibling dir sharing the base prefix', function () {
+    $html = '<a href="https://site.com/wp-content/uploads-backup/x.zip">b</a>'
+          . '<img src="https://site.com/wp-content/uploads/2026/06/a.jpg">';
+    $out = R2MO_Rewriter::swap_base($html, 'https://site.com/wp-content/uploads', 'https://cdn.example.com');
+    assert_eq(
+        '<a href="https://site.com/wp-content/uploads-backup/x.zip">b</a><img src="https://cdn.example.com/2026/06/a.jpg">',
+        $out
+    );
+});
