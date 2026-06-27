@@ -37,7 +37,7 @@ class R2MO_Migrator {
     public function ajax_migrate_batch() {
         check_ajax_referer(self::NONCE, 'nonce');
         if (!current_user_can('manage_options')) {
-            wp_send_json_error('İzin yok');
+            wp_send_json_error(__('Permission denied', 'cloud-media-offload'));
         }
         $s    = R2MO_Settings::get();
         $ids  = $this->get_pending_ids((int) $s['batch_size']);
@@ -66,7 +66,7 @@ class R2MO_Migrator {
     public function ajax_test_connection() {
         check_ajax_referer(self::NONCE, 'nonce');
         if (!current_user_can('manage_options')) {
-            wp_send_json_error('İzin yok');
+            wp_send_json_error(__('Permission denied', 'cloud-media-offload'));
         }
         $s      = R2MO_Settings::get();
         $client = new R2MO_S3_Client(R2MO_Provider::config_from_settings($s));
@@ -79,9 +79,9 @@ class R2MO_Migrator {
 
         if ($put['code'] >= 200 && $put['code'] < 300) {
             $client->delete($key);
-            wp_send_json_success('Bağlantı başarılı ✓');
+            wp_send_json_success(__('Connection successful', 'cloud-media-offload') . ' ✓');
         }
-        wp_send_json_error("HTTP {$put['code']} — {$put['error']} " . substr($put['body'], 0, 300));
+        wp_send_json_error(sprintf( __('HTTP %1$d — %2$s %3$s', 'cloud-media-offload'), $put['code'], $put['error'], substr($put['body'], 0, 300) ));
     }
 
     /** WP-CLI: wp r2mo migrate [--delete-local] */
@@ -90,11 +90,11 @@ class R2MO_Migrator {
             $opt = get_option(R2MO_Settings::OPTION, []);
             $opt['delete_local'] = 1;
             update_option(R2MO_Settings::OPTION, $opt);
-            WP_CLI::log('delete-local etkin: yüklenen dosyalar yerelden silinecek.');
+            WP_CLI::log(__('delete-local enabled: uploaded files will be deleted locally.', 'cloud-media-offload'));
         }
         $ids   = $this->get_pending_ids(-1);
         $total = count($ids);
-        WP_CLI::log("Taşınacak: {$total} attachment");
+        WP_CLI::log(sprintf( __('To migrate: %d attachment(s)', 'cloud-media-offload'), $total ));
         $ok = 0; $fail = 0;
         foreach ($ids as $id) {
             $r = $this->offloader->offload_attachment($id);
@@ -106,6 +106,6 @@ class R2MO_Migrator {
             }
         }
         R2MO_Cache::flush();
-        WP_CLI::success("Bitti. Başarılı: {$ok}, Hatalı: {$fail}");
+        WP_CLI::success(sprintf( __('Done. Succeeded: %1$d, Failed: %2$d', 'cloud-media-offload'), $ok, $fail ));
     }
 }

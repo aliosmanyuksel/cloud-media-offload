@@ -15,11 +15,11 @@
         testBtn.addEventListener('click', function (e) {
             e.preventDefault();
             var out = document.getElementById('r2mo-test-result');
-            out.textContent = 'Test ediliyor...';
+            out.textContent = R2MO.i18n.testing;
             post('r2mo_test').then(function (d) {
-                out.textContent = d.success ? d.data : ('Hata: ' + d.data);
+                out.textContent = d.success ? d.data : (R2MO.i18n.error + ' ' + d.data);
             }).catch(function (err) {
-                out.textContent = 'Bağlantı hatası: ' + err;
+                out.textContent = R2MO.i18n.connError + ' ' + err;
             });
         });
     }
@@ -51,9 +51,9 @@
         wizardTest.addEventListener('click', function (e) {
             e.preventDefault();
             var out = document.getElementById('r2mo-test-result');
-            out.textContent = 'Test ediliyor...';
+            out.textContent = R2MO.i18n.testing;
             window.R2MO_post('r2mo_test').then(function (d) {
-                out.textContent = d.success ? d.data : ('Hata: ' + d.data);
+                out.textContent = d.success ? d.data : (R2MO.i18n.error + ' ' + d.data);
             });
         });
     }
@@ -76,7 +76,7 @@
     function batch() {
         if (!running) { return; }
         window.R2MO_post('r2mo_migrate_batch').then(function (d) {
-            if (!d.success) { addLog('HATA: ' + d.data); toggle(false); return; }
+            if (!d.success) { addLog(R2MO.i18n.failPrefix + ' ' + d.data); toggle(false); return; }
             (d.data.errors || []).forEach(addLog);
             var pct = total ? Math.round(((total - d.data.remaining) / total) * 100) : 100;
             bar.style.width = pct + '%';
@@ -85,12 +85,12 @@
             if (d.data.remaining > 0 && d.data.processed > 0) {
                 batch();
             } else {
-                addLog('Tamamlandı. Kalan: ' + d.data.remaining);
+                addLog(R2MO.i18n.completed + ' ' + d.data.remaining);
                 toggle(false);
             }
-        }).catch(function (e) { addLog('Bağlantı hatası: ' + e); toggle(false); });
+        }).catch(function (e) { addLog(R2MO.i18n.connError + ' ' + e); toggle(false); });
     }
 
-    startBtn.addEventListener('click', function () { toggle(true); addLog('Başladı...'); batch(); });
-    stopBtn.addEventListener('click', function () { toggle(false); addLog('Durduruldu.'); });
+    startBtn.addEventListener('click', function () { toggle(true); addLog(R2MO.i18n.started); batch(); });
+    stopBtn.addEventListener('click', function () { toggle(false); addLog(R2MO.i18n.stopped); });
 })();

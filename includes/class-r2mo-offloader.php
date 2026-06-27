@@ -72,12 +72,12 @@ class R2MO_Offloader {
     public function offload_attachment($attachment_id, $metadata = null) {
         $s = R2MO_Settings::get();
         if (!$this->ready($s)) {
-            return ['ok' => false, 'uploaded' => 0, 'verified' => 0, 'msg' => 'R2 ayarları eksik'];
+            return ['ok' => false, 'uploaded' => 0, 'verified' => 0, 'msg' => __('R2 settings are incomplete', 'cloud-media-offload')];
         }
 
         $files = $this->attachment_files($attachment_id, $metadata);
         if (empty($files)) {
-            return ['ok' => false, 'uploaded' => 0, 'verified' => 0, 'msg' => 'Dosya bulunamadı'];
+            return ['ok' => false, 'uploaded' => 0, 'verified' => 0, 'msg' => __('No files found', 'cloud-media-offload')];
         }
 
         $client   = $this->client();
@@ -94,12 +94,12 @@ class R2MO_Offloader {
             $put  = $client->put($key, $absolute, $type);
             if ($put['code'] < 200 || $put['code'] >= 300) {
                 return ['ok' => false, 'uploaded' => $uploaded, 'verified' => $verified,
-                        'msg' => "Yükleme hatası ({$key}): HTTP {$put['code']} {$put['error']}"];
+                        'msg' => sprintf( __('Upload error (%1$s): HTTP %2$d %3$s', 'cloud-media-offload'), $key, $put['code'], $put['error'] )];
             }
             $uploaded++;
             if (!$client->exists($key)) {
                 return ['ok' => false, 'uploaded' => $uploaded, 'verified' => $verified,
-                        'msg' => "Doğrulama başarısız ({$key}): R2'de bulunamadı"];
+                        'msg' => sprintf( __('Verification failed (%s): not found on R2', 'cloud-media-offload'), $key )];
             }
             $verified++;
             $keys[] = [$relative, $absolute];
@@ -107,7 +107,7 @@ class R2MO_Offloader {
 
         if ($uploaded === 0) {
             return ['ok' => false, 'uploaded' => 0, 'verified' => 0,
-                    'msg' => 'Dosya bulunamadı (disk üzerinde yok)'];
+                    'msg' => __('No files found (missing on disk)', 'cloud-media-offload')];
         }
 
         update_post_meta($attachment_id, self::META_OFFLOADED, 1);
@@ -121,7 +121,7 @@ class R2MO_Offloader {
         }
 
         return ['ok' => true, 'uploaded' => $uploaded, 'verified' => $verified,
-                'msg' => "{$verified} dosya yüklendi ve doğrulandı"];
+                'msg' => sprintf( __('%d files uploaded and verified', 'cloud-media-offload'), $verified )];
     }
 
     /** Filter callback on wp_generate_attachment_metadata (priority 9999). */

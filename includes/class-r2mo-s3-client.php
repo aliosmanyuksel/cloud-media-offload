@@ -65,7 +65,7 @@ class R2MO_S3_Client {
      */
     public function request($method, $key, $body_file = null, $content_type = 'application/octet-stream') {
         if (!function_exists('curl_init')) {
-            return ['code' => 0, 'body' => '', 'error' => 'cURL eklentisi yok'];
+            return ['code' => 0, 'body' => '', 'error' => __('cURL extension not available', 'cloud-media-offload')];
         }
 
         $cfg    = $this->cfg;
