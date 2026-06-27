@@ -8,7 +8,9 @@ class R2MO_Cache {
     /** Best-effort purge of common cache plugins. Every call is guarded. */
     public static function flush() {
         // LiteSpeed Cache
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
         if (function_exists('do_action') && function_exists('has_action') && has_action('litespeed_purge_all')) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
             do_action('litespeed_purge_all');
         }
         // WP Rocket
@@ -21,6 +23,7 @@ class R2MO_Cache {
         }
         // WP Fastest Cache
         if (function_exists('do_action')) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
             do_action('wpfc_clear_all_cache', true);
         }
         // Autoptimize
@@ -36,6 +39,7 @@ class R2MO_Cache {
         }
         // Woodmart theme cache
         if (function_exists('do_action')) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
             do_action('woodmart_clear_all_cache');
         }
     }

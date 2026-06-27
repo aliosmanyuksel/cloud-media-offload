@@ -31,6 +31,7 @@ class R2MO_Plugin {
     private function hooks() {
         // i18n
         add_action('init', function () {
+            // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound
             load_plugin_textdomain('cloud-media-offload', false, dirname(plugin_basename(R2MO_FILE)) . '/languages');
         });
 

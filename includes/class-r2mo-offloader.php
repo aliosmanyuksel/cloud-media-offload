@@ -94,11 +94,13 @@ class R2MO_Offloader {
             $put  = $client->put($key, $absolute, $type);
             if ($put['code'] < 200 || $put['code'] >= 300) {
                 return ['ok' => false, 'uploaded' => $uploaded, 'verified' => $verified,
+                        /* translators: 1: S3 object key, 2: HTTP status code, 3: error message */
                         'msg' => sprintf( __('Upload error (%1$s): HTTP %2$d %3$s', 'cloud-media-offload'), $key, $put['code'], $put['error'] )];
             }
             $uploaded++;
             if (!$client->exists($key)) {
                 return ['ok' => false, 'uploaded' => $uploaded, 'verified' => $verified,
+                        /* translators: %s: S3 object key */
                         'msg' => sprintf( __('Verification failed (%s): not found on R2', 'cloud-media-offload'), $key )];
             }
             $verified++;
@@ -115,12 +117,13 @@ class R2MO_Offloader {
         if (!empty($s['delete_local'])) {
             foreach ($keys as [$relative, $absolute]) {
                 if (file_exists($absolute)) {
-                    @unlink($absolute);
+                    wp_delete_file($absolute);
                 }
             }
         }
 
         return ['ok' => true, 'uploaded' => $uploaded, 'verified' => $verified,
+                /* translators: %d: number of uploaded and verified files */
                 'msg' => sprintf( __('%d files uploaded and verified', 'cloud-media-offload'), $verified )];
     }
 

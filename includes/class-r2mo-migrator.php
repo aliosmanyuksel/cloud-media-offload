@@ -22,6 +22,7 @@ class R2MO_Migrator {
             'posts_per_page' => $limit,
             'fields'         => 'ids',
             'no_found_rows'  => true,
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
             'meta_query'     => [[
                 'key'     => R2MO_Offloader::META_OFFLOADED,
                 'compare' => 'NOT EXISTS',
@@ -75,12 +76,13 @@ class R2MO_Migrator {
         $tmp = wp_tempnam('r2mo-test');
         file_put_contents($tmp, 'r2mo ' . gmdate('c'));
         $put = $client->put($key, $tmp, 'text/plain');
-        @unlink($tmp);
+        wp_delete_file($tmp);
 
         if ($put['code'] >= 200 && $put['code'] < 300) {
             $client->delete($key);
             wp_send_json_success(__('Connection successful', 'cloud-media-offload') . ' ✓');
         }
+        /* translators: 1: HTTP status code, 2: error message, 3: response body snippet */
         wp_send_json_error(sprintf( __('HTTP %1$d — %2$s %3$s', 'cloud-media-offload'), $put['code'], $put['error'], substr($put['body'], 0, 300) ));
     }
 
@@ -94,6 +96,7 @@ class R2MO_Migrator {
         }
         $ids   = $this->get_pending_ids(-1);
         $total = count($ids);
+        /* translators: %d: number of attachments */
         WP_CLI::log(sprintf( __('To migrate: %d attachment(s)', 'cloud-media-offload'), $total ));
         $ok = 0; $fail = 0;
         foreach ($ids as $id) {
@@ -106,6 +109,7 @@ class R2MO_Migrator {
             }
         }
         R2MO_Cache::flush();
+        /* translators: 1: number of successful migrations, 2: number of failed migrations */
         WP_CLI::success(sprintf( __('Done. Succeeded: %1$d, Failed: %2$d', 'cloud-media-offload'), $ok, $fail ));
     }
 }

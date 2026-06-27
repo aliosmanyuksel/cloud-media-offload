@@ -112,6 +112,7 @@ class R2MO_S3_Client {
 
         // Raw cURL (not WP HTTP API) so large PUT bodies stream from disk via
         // CURLOPT_INFILE instead of being buffered into memory. TLS is verified.
+        // phpcs:disable WordPress.WP.AlternativeFunctions
         $ch = curl_init($url);
         curl_setopt_array($ch, [
             CURLOPT_CUSTOMREQUEST  => $method,
@@ -141,6 +142,7 @@ class R2MO_S3_Client {
         if (is_resource($fh)) {
             fclose($fh);
         }
+        // phpcs:enable WordPress.WP.AlternativeFunctions
 
         return ['code' => $code, 'body' => (string) $resp, 'error' => $error];
     }

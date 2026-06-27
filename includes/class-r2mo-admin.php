@@ -74,29 +74,34 @@ class R2MO_Admin {
                             <option value="generic" <?php selected($s['provider'], 'generic'); ?>><?php esc_html_e('Generic S3-compatible', 'cloud-media-offload'); ?></option>
                         </select>
                     </td></tr>
-                    <tr><th><?php esc_html_e('Account ID (R2)', 'cloud-media-offload'); ?><?php echo $this->locked_note('account_id'); ?></th><td>
+                    <tr><th><?php esc_html_e('Account ID (R2)', 'cloud-media-offload'); ?><?php echo wp_kses_post( $this->locked_note('account_id') ); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('account_id')); ?>" value="<?php echo esc_attr($s['account_id']); ?>">
                     </td></tr>
-                    <tr><th><?php esc_html_e('Endpoint (generic)', 'cloud-media-offload'); ?><?php echo $this->locked_note('endpoint'); ?></th><td>
+                    <tr><th><?php esc_html_e('Endpoint (generic)', 'cloud-media-offload'); ?><?php echo wp_kses_post( $this->locked_note('endpoint') ); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('endpoint')); ?>" value="<?php echo esc_attr($s['endpoint']); ?>" placeholder="s3.us-west-1.wasabisys.com">
                     </td></tr>
-                    <tr><th><?php esc_html_e('Region', 'cloud-media-offload'); ?><?php echo $this->locked_note('region'); ?></th><td>
+                    <tr><th><?php esc_html_e('Region', 'cloud-media-offload'); ?><?php echo wp_kses_post( $this->locked_note('region') ); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('region')); ?>" value="<?php echo esc_attr($s['region']); ?>">
-                        <p class="description"><?php printf( esc_html__( 'Use %s for R2.', 'cloud-media-offload' ), '<code>auto</code>' ); ?></p>
+                        <p class="description">
+                            <?php
+                            /* translators: %s: auto code tag */
+                            printf( esc_html__( 'Use %s for R2.', 'cloud-media-offload' ), '<code>auto</code>' );
+                            ?>
+                        </p>
                     </td></tr>
                     <tr><th><?php esc_html_e('Path-style', 'cloud-media-offload'); ?></th><td>
                         <label><input type="checkbox" name="<?php echo esc_attr($this->field_name('path_style')); ?>" value="1" <?php checked($s['path_style']); ?>> <?php esc_html_e('Use path-style URLs (on for R2 and most S3-compatible)', 'cloud-media-offload'); ?></label>
                     </td></tr>
-                    <tr><th><?php esc_html_e('Access Key ID', 'cloud-media-offload'); ?><?php echo $this->locked_note('access_key'); ?></th><td>
+                    <tr><th><?php esc_html_e('Access Key ID', 'cloud-media-offload'); ?><?php echo wp_kses_post( $this->locked_note('access_key') ); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('access_key')); ?>" value="<?php echo esc_attr($s['access_key']); ?>">
                     </td></tr>
-                    <tr><th><?php esc_html_e('Secret Access Key', 'cloud-media-offload'); ?><?php echo $this->locked_note('secret_key'); ?></th><td>
+                    <tr><th><?php esc_html_e('Secret Access Key', 'cloud-media-offload'); ?><?php echo wp_kses_post( $this->locked_note('secret_key') ); ?></th><td>
                         <input type="password" class="regular-text" name="<?php echo esc_attr($this->field_name('secret_key')); ?>" value="<?php echo esc_attr($s['secret_key']); ?>">
                     </td></tr>
-                    <tr><th><?php esc_html_e('Bucket', 'cloud-media-offload'); ?><?php echo $this->locked_note('bucket'); ?></th><td>
+                    <tr><th><?php esc_html_e('Bucket', 'cloud-media-offload'); ?><?php echo wp_kses_post( $this->locked_note('bucket') ); ?></th><td>
                         <input type="text" class="regular-text" name="<?php echo esc_attr($this->field_name('bucket')); ?>" value="<?php echo esc_attr($s['bucket']); ?>">
                     </td></tr>
-                    <tr><th><?php esc_html_e('Public Base URL', 'cloud-media-offload'); ?><?php echo $this->locked_note('public_base'); ?></th><td>
+                    <tr><th><?php esc_html_e('Public Base URL', 'cloud-media-offload'); ?><?php echo wp_kses_post( $this->locked_note('public_base') ); ?></th><td>
                         <input type="url" class="regular-text" name="<?php echo esc_attr($this->field_name('public_base')); ?>" value="<?php echo esc_attr($s['public_base']); ?>" placeholder="https://cdn.example.com">
                         <p class="description"><?php esc_html_e('Custom domain or r2.dev address. URL rewriting uses this.', 'cloud-media-offload'); ?></p>
                     </td></tr>
@@ -194,7 +199,12 @@ class R2MO_Admin {
 
                 <div class="r2mo-wizard-step" data-step="5">
                     <h2><?php esc_html_e('5. Finish', 'cloud-media-offload'); ?></h2>
-                    <p><?php echo sprintf( __('There are %d media file(s) pending.', 'cloud-media-offload'), (int) $pending ); ?></p>
+                    <p>
+                        <?php
+                        /* translators: %d: number of pending media files */
+                        echo esc_html( sprintf( __( 'There are %d media file(s) pending.', 'cloud-media-offload' ), (int) $pending ) );
+                        ?>
+                    </p>
                     <p class="description"><?php esc_html_e('After saving, migrate the existing library from the Migration page. After migration completes, enable Full-page URL rewriting in Settings.', 'cloud-media-offload'); ?> <a href="<?php echo esc_url(admin_url('admin.php?page=r2mo-migrate')); ?>"><?php esc_html_e('Migration', 'cloud-media-offload'); ?></a>.</p>
                     <button type="button" class="button r2mo-prev"><?php esc_html_e('Back', 'cloud-media-offload'); ?></button>
                     <?php submit_button(__('Save', 'cloud-media-offload'), 'primary', 'submit', false); ?>
